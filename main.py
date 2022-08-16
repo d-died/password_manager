@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 import random
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
@@ -43,13 +44,18 @@ gen_pass_button.grid(row=3, column=2)
 
 # Add entry:
 def save():
+
     website = website_input.get()
     email = email_input.get()
     password = password_input.get()
-    data = open("data.txt", "a")
-    data.write(f"{website} | {email} | {password} \n")
-    website_input.delete(0, END)
-    password_input.delete(0, END)
+
+    save_details = messagebox.askokcancel(title=website, message=f"The details you entered are as follows: \n Email: {email} \n "
+                                                  f"Password: {password} \n Would you like to save these details?")
+    if save_details:
+        with open("data.txt", "a") as data:
+            data.write(f"{website} | {email} | {password} \n")
+        website_input.delete(0, END)
+        password_input.delete(0, END)
 
 add_button = Button(text="Add", width=36, highlightbackground="white", command=save)
 add_button.grid(row=4, column=1, columnspan=2)
